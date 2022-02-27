@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- <div class="content text-center" >
+    {% for t in descriptions %}
+    1. tags: 
+    {% for tt in t.tag.all %}
+        {{tt}} <br>
+        {% endfor %}
+    Title: {{t.title}} <br>
+    Desc: {{t.desc}} <br> <br>
+    {% endfor %}
+<br><br><br>
+    <form method="post">
+        {% csrf_token %}
+        {{descriptions_Form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+</div> -->
+<div class="container">
+    <div class="row">
+        <!-- left node  -->
+        <div class="col-md-5"></div>
+
+        <!-- right node  -->
+        <div class="col-md-7">
+            <form action="/" method="post">
+                {% csrf_token %}
+            <div class="row">
+                    <div class="col-md-8">
+                        <div>
+                            Heading: {{descriptions_Form.title}}
+                        </div>
+                        <div>
+                            Descriptions: {{descriptions_Form.desc}} 
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        Tags: <br>
+                        {{descriptions_Form.tag}}
+                        <!-- {% for tg in descriptions_Form.tag %}
+                        <input type="checkbox" id='{{tag.id}}' />
+                        <label class="form-check-label" for="{{tag.id}}"> {{tg}} </label> <br>
+                         {% endfor %} -->
+                    </div>
+            </div>
+            <button type="submit">Submit</button>
+            <button type="reset">Cancel</button>
+            </form>
+
+            <!-- all descriptions  -->
+            <div class="row">
+                <h3>All Review</h3>
+                <div class="col-md-10">
+                    {% for d in descriptions %}
+                        <div>{{d}}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
