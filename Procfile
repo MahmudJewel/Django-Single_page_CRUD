@@ -1,0 +1,1 @@
+web: gunicorn task_for_Algorithm_Generation.wsgi
