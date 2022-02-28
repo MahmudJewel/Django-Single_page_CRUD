@@ -7,5 +7,5 @@ class Descriptions_Form(forms.ModelForm):
         model = Descriptions
         fields = ["tag", "title", "desc"]
         widgets = {
-            'tag': forms.CheckboxSelectMultiple
+            'tag': forms.CheckboxSelectMultiple # many-to-many field will show as checkbox
         }

@@ -1,26 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- <div class="content text-center" >
-    {% for t in descriptions %}
-    1. tags: 
-    {% for tt in t.tag.all %}
-        {{tt}} <br>
-        {% endfor %}
-    Title: {{t.title}} <br>
-    Desc: {{t.desc}} <br> <br>
-    {% endfor %}
-<br><br><br>
-    <form method="post">
-        {% csrf_token %}
-        {{descriptions_Form.as_p}}
-        <button type="submit">Submit</button>
-    </form>
-</div> -->
 <div class="container">
     <form action="/" method="post">
     <div class="row">
         <!-- left node  -->
-        <div class="col-md-5"></div>
+        <div class="col-md-5">
+
+        {% regroup categories by MainCategory as maincategory %}
+        <ul>
+        {% for mncat in maincategory %}
+            {% if mncat.grouper %}
+            <li> <h3>{{ mncat.grouper }}</h3>
+                {% endif %}
+
+                {% regroup mncat.list by SubCategory1 as events_list_by_month %}
+                {% for month in events_list_by_month %}
+                <ul> {% if month.grouper %}
+                    <h4>{{month.grouper}}</h4>
+                    {% endif %}
+                <ul>
+                 {% for SubCategory1 in month.list %}
+                    <li>{{ SubCategory1.SubCategory2 }}</li>
+                {% endfor %}
+                </ul>
+            </ul>
+                {% endfor %}
+            </li>
+        {% endfor %}
+        </ul>
+
+        </div>
 
         <!-- right node  -->
         <div class="col-md-7">

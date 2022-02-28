@@ -3,7 +3,7 @@ from django.views.generic import CreateView
 from django.views import View
 from django.http import HttpResponse
 
-from second.models import Tag, Descriptions
+from second.models import Tag, Descriptions, Category
 from second.forms import Descriptions_Form
 # Create your views here.
 class home_view(View):
@@ -12,6 +12,7 @@ class home_view(View):
 		tag = Tag.objects.all()
 		descriptions = Descriptions.objects.all()
 		descriptions_Form = Descriptions_Form()
+		categories = Category.objects.all().order_by('-MainCategory')
 		getid = request.GET.get("docid")
 		obj = ''
 		# print('ok id', getid)
@@ -26,6 +27,7 @@ class home_view(View):
 			"descriptions" : descriptions,
 			'getid':getid,
 			'obj' : obj,
+			'categories' : categories,
 		}
 		return render(request, 'home.html', context)
 	
