@@ -1,93 +1,108 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% load widget_tweaks %} {% block content %}
 <div class="container">
-    <form action="/" method="post">
+  <form action="/" method="post">
     <div class="row">
-        <!-- left node  -->
-        <div class="col-md-5">
-
+      <!-- left node  -->
+      <div class="col-md-5">
         {% regroup categories by MainCategory as maincategory %}
         <ul>
-        {% for mncat in maincategory %}
-            {% if mncat.grouper %}
-            <li> <h3>{{ mncat.grouper }}</h3>
+          {% for mncat in maincategory %} 
+          {% if mncat.grouper %}
+          <li>
+            <h3>{{ mncat.grouper }}</h3>
+            {% endif %} 
+            {% regroup mncat.list by SubCategory1 as events_list_by_month %} 
+            {% for month in events_list_by_month %}
+            <ul>
+              {% if month.grouper %}
+              <h4>{{month.grouper}}</h4>
+              {% endif %}
+              <ul>
+                {% for SubCategory1 in month.list %}
+                <li>{{ SubCategory1.SubCategory2 }}</li>
+                {% endfor %}
+              </ul>
+            </ul>
+            {% endfor %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- right node  -->
+      <div class="col-md-7">
+        <form action="/" method="post">
+          {% csrf_token %}
+          <div class="row p-4 bg-light" style="border-radius: 20px;">
+              <h2 class="text-center text-primary">Form</h2>
+            <div class="col-md-8">
+              <div class="form-group mb-2">
+                <!-- Heading: {{descriptions_Form.title}} -->
+                <label for="header">Heading:</label>
+                {% render_field descriptions_Form.title|attr:'required:true' id="header" class="form-control item" %}
+              </div>
+              <div class="form-group mb-2">
+                <!-- Descriptions: {{descriptions_Form.desc}}  -->
+                <label for="desc">Descriptions:</label>
+                {% render_field descriptions_Form.desc|attr:'required:true' id="desc" class="form-control item" %}
+              </div>
+              <div class="mt-1 mb-2">
+                {% if obj %} Tags: {% for ss in obj.tag.all %}
+                <b>{{ss}}</b>
+              {% endfor %} {% endif %}
+              </div>
+            </div>
+
+              <div class="col-md-4">
+                <h3>Subjects</h3>
+                <!-- {{descriptions_Form.tag}} -->
+                <i>{% render_field descriptions_Form.tag %}</i>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button type="reset" class="btn btn-danger ms-2">Cancel</button>
+              </div>
+          </div>
+          
+        </form>
+
+        <!-- all descriptions  -->
+        <div class="row my-5">
+          <h3 class="text-center">All Reviews</h3>
+          <!-- <form action="?" method="get"> -->
+          <div class="col-md-12 mt-2">
+            {% for d in descriptions %}
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-secondary">
+                {% if getid == d.id %}
+                <input hidden type="text" value="{{d.id}}" name="inpt" />
                 {% endif %}
 
-                {% regroup mncat.list by SubCategory1 as events_list_by_month %}
-                {% for month in events_list_by_month %}
-                <ul> {% if month.grouper %}
-                    <h4>{{month.grouper}}</h4>
-                    {% endif %}
-                <ul>
-                 {% for SubCategory1 in month.list %}
-                    <li>{{ SubCategory1.SubCategory2 }}</li>
-                {% endfor %}
-                </ul>
+                <div class="row">
+                  <div class="col-9">{{d}}</div>
+                  <div class="col-3">
+                    <a
+                      href="?docid={{d.id}}"
+                      type="submit"
+                      name="edit"
+                      class="btn btn-primary"
+                      >Edit</a
+                    >
+                  </div>
+                </div>
+              </li>
             </ul>
-                {% endfor %}
-            </li>
-        {% endfor %}
-        </ul>
-
-        </div>
-
-        <!-- right node  -->
-        <div class="col-md-7">
-            <form action="/" method="post">
-                {% csrf_token %}
-            <div class="row">
-                    <div class="col-md-8">
-                        <div>
-                            Heading: {{descriptions_Form.title}}
-                        </div>
-                        <div>
-                            Descriptions: {{descriptions_Form.desc}} 
-                        </div>
-                        {% if obj %}
-                        Subjects: 
-                            {% for ss in obj.tag.all %}
-                                {{ss}}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="col-md-4">
-                        Tags: <br>
-                        {{descriptions_Form.tag}}
-                        <!-- {% for tg in descriptions_Form.tag %}
-                        <input type="checkbox" id='{{tag.id}}' />
-                        <label class="form-check-label" for="{{tag.id}}"> {{tg}} </label> <br>
-                         {% endfor %} -->
-                    </div>
-            </div>
-            <button type="submit">Submit</button>
-            <button type="reset">Cancel</button>
-            </form>
-
-            <!-- all descriptions  -->
-            <div class="row">
-                <h3>All Review</h3>
-                <!-- <form action="?" method="get"> -->
-                <div class="col-md-10">
-                    {% for d in descriptions %}
-                        <div>
-                            {% if getid == d.id %}
-                            <input hidden type="text" value="{{d.id}}" name='inpt'>
-                            {% endif %}
-
-                            {{d}}
-                            <a href="?docid={{d.id}}" type="submit" name="edit" class="btn btn-primary">Edit</a>
-                        </div>
-                        <!-- delete button  -->
-                        <!-- <div class="control">
+            <!-- delete button  -->
+            <!-- <div class="control">
                             <a href="" class="btn btn-danger mt-3 me-3">Delete</a>
                         </div> -->
 
-                    {% endfor %}
-                </div>
-            <!-- </form> -->
-            </div>
+            {% endfor %}
+          </div>
+          <!-- </form> -->
         </div>
+      </div>
     </div>
-</form>
+  </form>
 </div>
 {% endblock %}
