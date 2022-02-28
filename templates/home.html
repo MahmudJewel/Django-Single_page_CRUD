@@ -4,6 +4,8 @@
     <div class="row">
       <!-- left node  -->
       <div class="col-md-5">
+      <div class="bg-light p-4 mt-3" style="border-radius: 20px;">
+        <h3 class="text-center text-primary">Categories</h3>
         {% regroup categories by MainCategory as maincategory %}
         <ul>
           {% for mncat in maincategory %} 
@@ -27,6 +29,7 @@
           </li>
           {% endfor %}
         </ul>
+      </div>
       </div>
 
       <!-- right node  -->

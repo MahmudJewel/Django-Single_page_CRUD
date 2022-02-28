@@ -7,7 +7,11 @@ from second.models import Tag, Descriptions, Category
 from second.forms import Descriptions_Form
 # Create your views here.
 class home_view(View):
-	# template_name = 'home.html'
+	# template_name = "home.html"
+	# model=Descriptions
+	# context_object_name = 'descriptions'
+	# paginate_by = 12
+
 	def get(self, request):
 		tag = Tag.objects.all()
 		descriptions = Descriptions.objects.all()
@@ -46,17 +50,3 @@ class home_view(View):
 		print(f"Does not saved")
 		return redirect('/')
 
-
-# function based views
-def home_view_fnc(request):
-	tag = Tag.objects.all()
-	descriptions = Descriptions.objects.all()
-	descriptions_Form = Descriptions_Form()
-	if request.method == 'POST':
-		descriptions_Form = Descriptions_Form(request.POST)
-	context = {
-			'tag':tag,
-			"descriptions_Form": descriptions_Form,
-			"descriptions" : descriptions,
-		}
-	return render(request, 'home.html', context)
