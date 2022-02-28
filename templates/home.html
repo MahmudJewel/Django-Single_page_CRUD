@@ -34,6 +34,12 @@
                         <div>
                             Descriptions: {{descriptions_Form.desc}} 
                         </div>
+                        {% if obj %}
+                        Tag: 
+                            {% for ss in obj.tag.all %}
+                                {{ss}}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="col-md-4">
                         Tags: <br>
@@ -62,6 +68,11 @@
                             {{d}}
                             <a href="?docid={{d.id}}" type="submit" name="edit" class="btn btn-primary">Edit</a>
                         </div>
+                        <!-- delete button  -->
+                        <!-- <div class="control">
+                            <a href="" class="btn btn-danger mt-3 me-3">Delete</a>
+                        </div> -->
+
                     {% endfor %}
                 </div>
             <!-- </form> -->

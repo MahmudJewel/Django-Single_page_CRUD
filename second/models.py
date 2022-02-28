@@ -17,14 +17,18 @@ class Descriptions(models.Model):
     def __str__(self):
         return self.title
 
+# class Category(models.Model):
+#     MainCategory = models.CharField(max_length=200, null=True, blank=True)
+#     SubCategory1 = models.CharField(max_length=200, null=True, blank=True)
+#     SubCategory2 = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
-class MembershipInline(admin.TabularInline):
-    model = Descriptions.tag.through
+# class MembershipInline(admin.TabularInline):
+#     model = Descriptions.tag.through
 
-class TagAdmin(admin.ModelAdmin):
-    inlines = [
-        MembershipInline,
-    ]
+# class TagAdmin(admin.ModelAdmin):
+#     inlines = [
+#         MembershipInline,
+#     ]
 
 # class GroupAdmin(admin.ModelAdmin):
 #     inlines = [

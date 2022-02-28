@@ -13,17 +13,19 @@ class home_view(View):
 		descriptions = Descriptions.objects.all()
 		descriptions_Form = Descriptions_Form()
 		getid = request.GET.get("docid")
+		obj = ''
 		# print('ok id', getid)
 		if getid is not None:
 			getid = int(getid)
-			aa=Descriptions.objects.get(id=getid)
+			obj=Descriptions.objects.get(id=getid)
 			# print("instance:", aa)
-			descriptions_Form = Descriptions_Form(instance=aa)
+			descriptions_Form = Descriptions_Form(instance=obj)
 		context = {
 			'tag':tag,
 			"descriptions_Form": descriptions_Form,
 			"descriptions" : descriptions,
 			'getid':getid,
+			'obj' : obj,
 		}
 		return render(request, 'home.html', context)
 	
