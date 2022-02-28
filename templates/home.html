@@ -17,6 +17,7 @@
     </form>
 </div> -->
 <div class="container">
+    <form action="/" method="post">
     <div class="row">
         <!-- left node  -->
         <div class="col-md-5"></div>
@@ -50,13 +51,23 @@
             <!-- all descriptions  -->
             <div class="row">
                 <h3>All Review</h3>
+                <!-- <form action="?" method="get"> -->
                 <div class="col-md-10">
                     {% for d in descriptions %}
-                        <div>{{d}}</div>
+                        <div>
+                            {% if getid == d.id %}
+                            <input hidden type="text" value="{{d.id}}" name='inpt'>
+                            {% endif %}
+
+                            {{d}}
+                            <a href="?docid={{d.id}}" type="submit" name="edit" class="btn btn-primary">Edit</a>
+                        </div>
                     {% endfor %}
                 </div>
+            <!-- </form> -->
             </div>
         </div>
     </div>
+</form>
 </div>
 {% endblock %}

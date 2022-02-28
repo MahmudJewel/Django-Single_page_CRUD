@@ -9,30 +9,38 @@ from second.forms import Descriptions_Form
 class home_view(View):
 	# template_name = 'home.html'
 	def get(self, request):
-		p = self.request.GET.get('p')
 		tag = Tag.objects.all()
 		descriptions = Descriptions.objects.all()
-		# for d in descriptions:
-				# print("tag: ", d.tag)
-		# print(f"All desc: {descriptions}" )
 		descriptions_Form = Descriptions_Form()
+		getid = request.GET.get("docid")
+		# print('ok id', getid)
+		if getid is not None:
+			getid = int(getid)
+			aa=Descriptions.objects.get(id=getid)
+			# print("instance:", aa)
+			descriptions_Form = Descriptions_Form(instance=aa)
 		context = {
 			'tag':tag,
 			"descriptions_Form": descriptions_Form,
 			"descriptions" : descriptions,
+			'getid':getid,
 		}
 		return render(request, 'home.html', context)
 	
 	def post(self, request):
 		descriptions_Form = Descriptions_Form(request.POST)
+		getid = request.POST.get("inpt")
+		# print("instance of Id:", getid)
+		if getid is not None:
+			aa=Descriptions.objects.get(id=getid)
+			# print("instance of post:", aa)
+			descriptions_Form = Descriptions_Form(request.POST, request.FILES,instance=aa)
 		if descriptions_Form.is_valid():
 			descriptions_Form.save()
 			print(f"Successfully saved")
 			return redirect('/')
-		print(f"Does not saved", descriptions_Form)
+		print(f"Does not saved")
 		return redirect('/')
-		
-		# return render(request, 'home.html')
 
 
 # function based views
