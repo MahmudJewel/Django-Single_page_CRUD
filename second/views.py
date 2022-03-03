@@ -1,5 +1,10 @@
 from django.shortcuts import render, redirect
+# from django.core.urlresolvers import reverse_lazy 
+from django.urls import reverse_lazy
+
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
+
 from django.views import View
 from django.http import HttpResponse
 
@@ -50,3 +55,7 @@ class home_view(View):
 		print(f"Does not saved")
 		return redirect('/')
 
+class delete_Descriptions(DeleteView):
+    model = Descriptions
+    template_name = 'delete.html'
+    success_url =reverse_lazy('home')

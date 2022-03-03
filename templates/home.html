@@ -72,7 +72,7 @@
         <!-- all descriptions  -->
         <div class="row my-5">
           <h3 class="text-center">All Reviews</h3>
-          <!-- <form action="?" method="get"> -->
+          
           <div class="col-md-12 mt-2">
             {% for d in descriptions %}
             <ul class="list-group">
@@ -91,6 +91,13 @@
                       class="btn btn-primary"
                       >Edit</a
                     >
+                    <a
+                      href="{% url 'delete_view' d.id %}"
+                      type="submit"
+                      name="Delete"
+                      class="btn btn-danger ms-1"
+                      >Delete</a
+                    >
                   </div>
                 </div>
               </li>
@@ -102,7 +109,7 @@
 
             {% endfor %}
           </div>
-          <!-- </form> -->
+          
         </div>
       </div>
     </div>

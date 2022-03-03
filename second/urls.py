@@ -1,9 +1,7 @@
 from django.urls import path, include
-from second.views import home_view # , home_view_fnc
-from django.views.generic import DeleteView
+from second.views import home_view, delete_Descriptions # , home_view_fnc
 
 urlpatterns = [
-    path('', home_view.as_view()),
-    # path('1', home_view_fnc, name="hm"),
-    # path('delete', DeleteView.as_view()),
+    path('', home_view.as_view(),name='home'),
+    path('delete/<int:pk>', delete_Descriptions.as_view(), name="delete_view"),
 ]
